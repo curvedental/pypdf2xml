@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 # coding: utf-8
 """
 
@@ -31,7 +31,7 @@ def layout_detect(fileobj):
     pages = []
     for pagenum, page in enumerate(root):
         assert page.tag == 'page'
-        print page.attrib
+        print (page.attrib)
         pg = numpy.zeros((
             int(float(page.attrib.get('height'))),
             int(float(page.attrib.get('width'))),
@@ -53,13 +53,13 @@ def layout_detect(fileobj):
                 
                 pg[top:top+height,left:left+width] = 255
                 # fix some off-by-one placement issues, which make some text span over two lines where it should be in one
-                if pagelines.has_key(top-1): 
+                if top-1 in pagelines.keys():                     
                     top = top - 1
-                elif pagelines.has_key(top+1):
+                elif top+1 in pagelines.keys():
                     top = top + 1
                 line = pagelines.setdefault(top, [])
                 line.append((left, text))
-        ordered = list(sorted([(k, sorted(v)) for k,v in pagelines.iteritems()]))
+        ordered = list(sorted([(k, sorted(v)) for k,v in pagelines.items()]))
         rows.extend(ordered)
         pages.append((pagenum, ordered))
         pg2 = gauss(pg).astype(numpy.uint8)

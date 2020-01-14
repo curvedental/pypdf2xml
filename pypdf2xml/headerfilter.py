@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 # coding: utf-8
 """
 
@@ -7,7 +7,7 @@ usually header and footer.
 
 """
 
-from StringIO import StringIO
+from io import StringIO as StringIO
 import lxml.etree
 
 from pypdf2xml import parse_page_xml
@@ -24,7 +24,7 @@ def detect_repetition(pages):
             appearances = counter.setdefault(ht, [])
             appearances.append(pagenum)
 
-    counter_items = [(k, v) for k,v in counter.iteritems() if len(v) == numpages]
+    counter_items = [(k, v) for k,v in counter.items() if len(v) == numpages]
     header_footer = {}
     for item0 in counter_items:
         top = item0[0][0]

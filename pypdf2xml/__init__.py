@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 # coding: utf-8
 
 import os
@@ -40,14 +40,14 @@ def parse_page_xml(fileobj):
                 left = int(v.attrib.get('left'))
                 top  = int(v.attrib.get('top'))
 
-                # fix some off-by-one placement issues, which make some text span over two lines where it should be in one
-                if pagelines.has_key(top-1): 
+                # fix some off-by-one placement issues, which make some text span over two lines where it should be in one 
+                if top-1 in pagelines.keys():     
                     top = top - 1
-                elif pagelines.has_key(top+1):
+                elif top+1 in pagelines.keys():
                     top = top + 1
                 line = pagelines.setdefault(top, [])
                 line.append((left, text))
-        ordered = list(sorted([(k, sorted(v)) for k,v in pagelines.iteritems()]))
+        ordered = list(sorted([(k, sorted(v)) for k,v in pagelines.items()]))
         rows.extend(ordered)
         pages.append((pagenum, ordered))
     return pages
@@ -227,12 +227,11 @@ def pdf2xml(fileobj, image_handler=None):
 
 if __name__ == "__main__":
     if len(sys.argv) != 2:
-        print """usage:
-    to see the output:
-    \tpdf2xml file.pdf
-    to write output to file:
-    \tpdf2xml file.pdf > outfile.xml
-    """
+        print ("usage:"\
+    "to see the output:"\
+    "\tpdf2xml file.pdf"\
+    "to write output to file:"\
+    "\tpdf2xml file.pdf > outfile.xml")
     else:
         pdf2xml(open(sys.argv[1], 'rb'), image_handler=None)
 

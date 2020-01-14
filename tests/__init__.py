@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 # coding: utf-8
 
 import unittest
@@ -22,7 +22,7 @@ class TestSimplePDF(unittest.TestCase):
 
         pdf_fn = datafile('test1.pdf')
         from pypdf2xml import pdf2xml
-        from StringIO import StringIO
+        from io import StringIO as StringIO
         xml = pdf2xml(StringIO(open(pdf_fn, 'rb').read()))
         
         got_lines = [i.strip() for i in xml.split('\n') if i.strip()]
@@ -42,7 +42,7 @@ class TestUnicodesPDF(unittest.TestCase):
 
         pdf_fn = datafile('test2.pdf')
         from pypdf2xml import pdf2xml
-        from StringIO import StringIO
+        from io import StringIO as StringIO
         xml = pdf2xml(StringIO(open(pdf_fn, 'rb').read()))
         
         got_lines = [i.strip() for i in xml.split('\n') if i.strip()]
